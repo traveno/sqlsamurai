@@ -70,7 +70,7 @@
   <div class="absolute bg-primary w-[20px] h-[20px] pointer-events-none " style="z-index: -25;" bind:this={$arrowRef}>
   </div>
 
-  <div class="w-full rounded-2xl bg-base-200 border-2 border-primary flex flex-col gap-2 text-neutral-content">
+  <div class="w-full rounded-2xl bg-base-200 border-2 border-primary flex flex-col gap-2 text-neutral-content shadow-md shadow-black/25">
 
     {#if loading}
     <div class="absolute top-0 left-0 rounded-2xl w-full h-full bg-gradient-to-br from-primary/60 to-primary flex flex-col justify-center items-center gap-4" transition:fade={{ duration: 150 }}>
@@ -96,6 +96,6 @@
   </div>
 </div>
 
-<div class="fixed w-screen h-screen top-0 left-0 bg-black/30 z-10" transition:fade={{ duration: 250 }} on:click={() => showTooltip = false}></div>
+<div class="fixed w-screen h-screen top-0 left-0 bg-black/20 z-10" transition:fade={{ duration: 250 }} on:click={() => showTooltip = false}></div>
 {/if}
 

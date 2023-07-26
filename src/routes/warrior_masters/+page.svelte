@@ -46,7 +46,7 @@
           {/each}
         </div>
       </NewItemMenu>
-      <DeleteItemMenu queued={selectableArray.filter(a => a.checked).map(a => `${defense_masters.find(m => m.master_id === a.obj.master_id)?.master_name} (${a.obj.master_id}) ${warriors.find(w => w.warrior_id === a.obj.warrior_id)?.first_name} ${warriors.find(w => w.warrior_id === a.obj.warrior_id)?.last_name} (${a.obj.warrior_id})`)}>
+      <DeleteItemMenu disabled={selectableArray.filter(i => i.checked).length === 0} queued={selectableArray.filter(a => a.checked).map(a => `${defense_masters.find(m => m.master_id === a.obj.master_id)?.master_name} (${a.obj.master_id}) ${warriors.find(w => w.warrior_id === a.obj.warrior_id)?.first_name} ${warriors.find(w => w.warrior_id === a.obj.warrior_id)?.last_name} (${a.obj.warrior_id})`)}>
         <span slot="entity">warrior_masters</span>
         <button class="btn btn-error btn-outline btn-sm" disabled={selectableArray.filter(i => i.checked).length === 0}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>

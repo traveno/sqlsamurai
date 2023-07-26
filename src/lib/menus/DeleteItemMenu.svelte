@@ -8,6 +8,7 @@
   
 
   export let queued: string[] = [];
+  export let disabled: boolean = false;
 
   let showTooltip = false;
   const arrowRef = writable<HTMLElement>(null!);
@@ -58,9 +59,14 @@
       });
     }, 1500);
   }
+
+  function launchModal() {
+    if (disabled) return;
+    showTooltip = !showTooltip;
+  }
 </script>
 
-<div use:floatingRef on:click={() => showTooltip = !showTooltip} class="{showTooltip ? 'z-20' : ''}">
+<div use:floatingRef on:click={() => launchModal()} class="{showTooltip ? 'z-20' : ''}">
   <slot />
 </div>
 
@@ -69,7 +75,7 @@
   <!-- Arrow -->
   <div class="absolute bg-error w-[20px] h-[20px] pointer-events-none -z-10" bind:this={$arrowRef}></div>
 
-  <div class="w-full min-h-16 rounded-2xl justify-between bg-base-200 text-neutral-content border-2 border-error transition flex flex-col gap-2">
+  <div class="w-full min-h-16 rounded-2xl justify-between bg-base-200 text-neutral-content border-2 border-error transition flex flex-col gap-2 shadow-md shadow-black/25">
 
     {#if loading}
     <div class="absolute top-0 left-0 rounded-2xl w-full h-full bg-gradient-to-br from-red-600/60 to-error flex flex-col justify-center items-center gap-4" transition:fade={{ duration: 150 }}>
