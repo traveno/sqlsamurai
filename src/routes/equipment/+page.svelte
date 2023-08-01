@@ -5,8 +5,7 @@
     import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
     import Paginate from "$lib/utils/Paginate.svelte";
 
-  let entity = 'equipment';
-  let entitySingle = 'equipment';
+  let entity = 'Equipment';
   let array = equipment;
   let currentId = 0;
   let lowerIndex = 0;
@@ -20,7 +19,7 @@
       <div class="font-mono text-3xl">{entity}</div>
       <div class="flex-grow"></div>
       <NewItemMenu>
-        <span slot="entity">equipment</span>
+        <span slot="entity">{entity}</span>
         <button class="btn btn-primary btn-sm">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
           New
@@ -43,7 +42,7 @@
         </div>
       </NewItemMenu>
       <DeleteItemMenu disabled={selectableArray.filter(i => i.checked).length === 0} queued={selectableArray.filter(a => a.checked).map(a => `${a.obj.sword_type} (${a.obj.equipment_id})`)}>
-        <span slot="entity">equipment</span>
+        <span slot="entity">{entity}</span>
         <button class="btn btn-error btn-outline btn-sm" disabled={selectableArray.filter(i => i.checked).length === 0}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
           Delete
@@ -75,7 +74,7 @@
             {/each}
             <td class="flex flex-row justify-end">
               <NewItemMenu placement="bottom-end" mode={'edit'}>
-                <span slot="entity">equipment</span>
+                <span slot="entity">{entity}</span>
                 <button class="btn btn-ghost btn-sm text-neutral-content/50">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                 </button>
