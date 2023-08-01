@@ -135,8 +135,8 @@ export const defense_masters = [
   { master_id: 21, master_name: 'Shintaro Moto', master_ability: 'Outside Voice Only' }
 ];
 
-export const warrior_masters_meta = ['Defense Master ID', 'Warrior ID'];
-export const warrior_masters = [
+export const warriors_masters_meta = ['Defense Master ID', 'Warrior ID'];
+export const warriors_masters = [
   { master_id: 1, warrior_id: 27 },
   { master_id: 2, warrior_id: 23 },
   { master_id: 3, warrior_id: 18 },

@@ -17,12 +17,12 @@
   });
 </script>
 
-<div use:floatingRef on:mouseenter={() => showTooltip = true} on:mouseleave={() => showTooltip = false}>
+<div role="button" tabindex="-1" use:floatingRef on:mouseenter={() => showTooltip = true} on:mouseleave={() => showTooltip = false}>
   <slot />
 </div>
 
 {#if showTooltip}
 <div class="absolute" use:floatingContent>
-  <div class="pointer-events-none px-4 py-1 rounded-r-lg text-2xl h-[56px] transition {activeRoute ? 'bg-info text-info-content' : 'bg-base-100'}" transition:fly={{ x: -15, duration: 150}}><slot name="text" /></div>
+  <div class="pointer-events-none px-4 py-1 rounded-r-lg text-2xl h-[56px] transition {activeRoute ? 'bg-info text-info-content' : 'bg-slate-700'}" transition:fly={{ x: -15, duration: 150}}><slot name="text" /></div>
 </div>
 {/if}
