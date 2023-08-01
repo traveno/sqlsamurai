@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { clans, nemeses } from "$lib/data";
+  import { clans, nemeses, nemeses_meta } from "$lib/data";
   import EntryMenu from "$lib/menus/ActionMenu.svelte";
     import DeleteItemMenu from "$lib/menus/DeleteItemMenu.svelte";
     import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
@@ -28,7 +28,7 @@
         <div slot="form">
           {#each Object.entries(array[currentId]) as [name, value], i}
             <div class="form-control w-full max-w-xs">
-              <label for="id" class="label"><span class="label-text font-light">{name}</span></label>
+              <label for="id" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
               {#if name === 'clan_id'}
               <select class="select bg-base-100 select-bordered border-base-content/25 font-light">
                 {#each clans as clan}
@@ -56,8 +56,8 @@
       <thead>
         <tr>
           <th></th>
-          {#each Object.entries(array[0]) as [key, value]}
-            <th>{key}</th>
+          {#each nemeses_meta as meta}
+            <th>{meta}</th>
           {/each}
           <th></th>
         </tr>
@@ -82,7 +82,7 @@
                 <div slot="form">
                   {#each Object.entries(data.obj) as [name, value], i}
                     <div class="form-control w-full max-w-xs">
-                      <label for="id" class="label"><span class="label-text font-light">{name}</span></label>
+                      <label for="id" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
                       {#if name === 'clan_id'}
                       <select class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
                         {#each clans as clan}

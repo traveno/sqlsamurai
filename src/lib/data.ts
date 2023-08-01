@@ -1,3 +1,4 @@
+export const warriors_meta = ['Warrior ID', 'First Name', 'Last Name',' Position', 'Second Defense', 'Clan ID'];
 export const warriors = [
   { warrior_id: 1, first_name: 'Kagami', last_name: 'Kaneie', position: 'H', second_defense: 'EM', clan_id: 6 },
   { warrior_id: 2, first_name: 'Kaede', last_name: 'Akiho', position: 'H', second_defense: 'Guide', clan_id: 7 },
@@ -51,6 +52,7 @@ export const warriors = [
   { warrior_id: 50, first_name: 'Akiho', last_name: 'Yamasato', position: 'C', second_defense: 'SS', clan_id: 3 }
 ];
 
+export const towns_meta = ['Town ID', 'Town Name', 'Defended by Clan ID'];
 export const towns = [
   { town_id: 1, town_name: 'Musashino', clan_town_id: 1 },
   { town_id: 2, town_name: 'Tomisato', clan_town_id: 2 },
@@ -61,6 +63,7 @@ export const towns = [
   { town_id: 7, town_name: 'Izumo', clan_town_id: 7 }
 ];
 
+export const clans_meta = ['Clan ID', 'Clan Name', 'Clan Size'];
 export const clans = [
   { clan_id: 1, clan_name: 'Masanori Kagami', clan_size: 4 },
   { clan_id: 2, clan_name: 'Mitsuyo Kishi', clan_size: 6 },
@@ -71,6 +74,7 @@ export const clans = [
   { clan_id: 7, clan_name: 'Yoshikuni Imai', clan_size: 8 }
 ];
 
+export const nemeses_meta = ['Nemesis ID', 'First Name', 'Last Name', 'Enemy of Clan ID'];
 export const nemeses = [
   { nemesis_id: 1, first_name: 'Terauchi', last_name: 'Shigeri', clan_id: 1 },
   { nemesis_id: 2, first_name: 'Kamino', last_name: 'Hisaya', clan_id: 2 },
@@ -81,6 +85,7 @@ export const nemeses = [
   { nemesis_id: 7, first_name: 'Tatsuki', last_name: 'Jun', clan_id: 7 },
 ];
 
+export const equipment_meta = ['Equipment ID', 'Sword Type', 'Assigned to Warrior ID'];
 export const equipment = [
   { equipment_id: 1, sword_type: 'Tachi', warrior_id: 44 },
   { equipment_id: 2, sword_type: 'Kenjutsu', warrior_id: 49 },
@@ -105,6 +110,7 @@ export const equipment = [
   { equipment_id: 21, sword_type: 'Kenjutsu', warrior_id: 24 },
 ];
 
+export const defense_masters_meta = ['Master ID', 'Master Name', 'Master Ability'];
 export const defense_masters = [
   { master_id: 1, master_name: 'Chiaki Shiro', master_ability: 'Supersonic Hearing' },
   { master_id: 2, master_name: 'Mitsuyo Yukimura', master_ability: 'Pacifist' },
@@ -129,6 +135,7 @@ export const defense_masters = [
   { master_id: 21, master_name: 'Shintaro Moto', master_ability: 'Outside Voice Only' }
 ];
 
+export const warrior_masters_meta = ['Defense Master ID', 'Warrior ID'];
 export const warrior_masters = [
   { master_id: 1, warrior_id: 27 },
   { master_id: 2, warrior_id: 23 },

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { clans } from "$lib/data";
+  import { clans, clans_meta } from "$lib/data";
   import EntryMenu from "$lib/menus/ActionMenu.svelte";
     import DeleteItemMenu from "$lib/menus/DeleteItemMenu.svelte";
   import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
@@ -28,7 +28,7 @@
         <div slot="form">
           {#each Object.entries(array[currentId]) as [name, value], i}
             <div class="form-control w-full max-w-xs text-neutral-content">
-              <label for="id" class="label"><span class="label-text font-light">{name}</span></label>
+              <label for="id" class="label"><span class="label-text font-light">{clans_meta[i]}</span></label>
               <input name="id" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
             </div>
           {/each}
@@ -49,8 +49,8 @@
       <thead>
         <tr>
           <th></th>
-          {#each Object.entries(array[0]) as [key, value]}
-            <th>{key}</th>
+          {#each clans_meta as meta}
+            <th>{meta}</th>
           {/each}
           <th></th>
         </tr>
@@ -71,7 +71,7 @@
                   <div slot="form">
                     {#each Object.entries(data.obj) as [name, value], i}
                       <div class="form-control w-full max-w-xs">
-                        <label for="id" class="label"><span class="label-text font-light">{name}</span></label>
+                        <label for="id" class="label"><span class="label-text font-light">{clans_meta[i]}</span></label>
                         <input name="id" type="text" class="input font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
                       </div>
                     {/each}
