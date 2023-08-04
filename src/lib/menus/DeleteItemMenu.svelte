@@ -3,7 +3,6 @@
 	import { offset, type Placement } from "svelte-floating-ui/core";
 	import { writable } from "svelte/store";
 	import { fade, fly } from "svelte/transition";
-  import toast from 'svelte-french-toast';
   import { autoPlacement, flip } from "svelte-floating-ui/dom";
   
 

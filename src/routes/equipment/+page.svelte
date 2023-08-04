@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths";
   import { equipment, equipment_meta, warriors } from "$lib/data";
   import DeleteItemMenu from "$lib/menus/DeleteItemMenu.svelte";
   import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
@@ -15,7 +16,7 @@
 
 <div class="container max-w-screen-lg bg-neutral text-neutral-content rounded-lg ml-16 my-16 shadow-xl">
   <div class="p-8 py-4 rounded-t-lg bg-warning text-warning-content">
-    <div>This table is currently not implemented, please visit <a class="text-blue-700" href="/warriors">Warriors</a> for testing...</div>
+    <div>This table is currently not implemented, please visit <a class="text-blue-700" href="{base}/warriors">Warriors</a> for testing...</div>
   </div>
   <div class="p-8 flex flex-col gap-8">
     <div class="flex flex-row justify-between gap-4">
