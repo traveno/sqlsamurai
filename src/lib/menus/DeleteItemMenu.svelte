@@ -8,7 +8,9 @@
   
 
   export let queued: string[] = [];
+  export let queuedIds: number[];
   export let disabled: boolean = false;
+  export let endpoint: string;
 
   let showTooltip = false;
   const arrowRef = writable<HTMLElement>(null!);
@@ -43,21 +45,24 @@
   let loading = false;
   let buttonsDisabled = false;
 
-  function fakeLoad() {
-    loading = true;
+  async function onSubmit() {
     buttonsDisabled = true;
+    loading = true;
+
+    const response = await fetch(`${endpoint}/delete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(queuedIds)
+    });
+
     setTimeout(() => {
       loading = false;
-      showTooltip = false;
       buttonsDisabled = false;
-      toast.success('Saved successfully', {
-        icon: '🎉',
-        className: 'text-2xl',
-        style: 'background-color: rgb(42, 50, 60); color: rgb(166, 173, 186); border: 1px solid rgb(25, 25, 25);',
-        position: 'bottom-center',
-        duration: 4000
-      });
-    }, 1500);
+      showTooltip = false;
+      location.reload();
+    }, 500);
   }
 
   function launchModal() {
@@ -82,7 +87,7 @@
       <div class="animate-spin inline-block w-12 h-12 border-[5px] border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading">
         <span class="sr-only">Loading...</span>
       </div>
-      <div class="text-sm font-thin italic text-white">Pretend I'm talking to the backend 👍</div>
+      <div class="text-sm font-thin italic text-white">Processing... 👍</div>
     </div>
     {/if}
     
@@ -98,7 +103,7 @@
     <div class="flex flex-row justify-end gap-4 z-10 p-4 bg-neutral text-neutral-content rounded-b-2xl">
       
       <button class="btn btn-sm btn-ghost font-light" on:click={() => showTooltip = false} disabled={buttonsDisabled}>Cancel</button>
-      <button class="btn btn-sm btn-error" on:click={() => fakeLoad()} disabled={buttonsDisabled}>Confirm</button>
+      <button class="btn btn-sm btn-error" on:click={() => onSubmit()} disabled={buttonsDisabled}>Confirm</button>
     </div>
   </div>
 </div>

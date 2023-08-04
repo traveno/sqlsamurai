@@ -11,6 +11,7 @@
   const arrowRef = writable<HTMLElement>(null!);
   export let placement: Placement = 'bottom';
   export let mode: 'new' | 'edit' = 'new';
+  export let endpoint: string;
 
   const [floatingRef, floatingContent] = createFloatingActions({
     strategy: 'absolute',
@@ -41,21 +42,32 @@
   let loading = false;
   let buttonsDisabled = false;
 
-  function fakeLoad() {
+  async function onSubmit(event: any) {
     buttonsDisabled = true;
     loading = true;
+
+    const formData = new FormData(event.target);
+    const data: { [key:string]: any } = {};
+    for (let field of formData) {
+      const [key, value] = field;
+      data[key] = value;
+    }
+
+    console.log(JSON.stringify(data));
+    const response = await fetch(`${endpoint}/${mode}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
     setTimeout(() => {
       loading = false;
-      showTooltip = false;
       buttonsDisabled = false;
-      toast.success('Saved successfully', {
-        icon: '🎉',
-        className: 'text-2xl',
-        style: 'background-color: rgb(42, 50, 60); color: rgb(166, 173, 186); border: 1px solid rgb(25, 25, 25);',
-        position: 'bottom-center',
-        duration: 4000
-      });
-    }, 1500);
+      showTooltip = false;
+      location.reload();
+    }, 500);
   }
 </script>
 
@@ -77,7 +89,7 @@
       <div class="animate-spin inline-block w-12 h-12 border-[5px] border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading">
         <span class="sr-only">Loading...</span>
       </div>
-      <div class="text-sm font-thin italic text-white">Pretend I'm talking to the backend 👍</div>
+      <div class="text-sm font-thin italic text-white">Processing... 👍</div>
     </div>
     {/if}
     
@@ -85,13 +97,15 @@
     <div class="text-xl text-center font-thin bg-neutral z-10 p-4 text-neutral-content rounded-t-2xl">{mode === 'new' ? 'New entry in ' : 'Editing row in '}<span class="font-mono font-bold"><slot name="entity" /></span></div>
 
     <div class="p-4">
-      <slot name="form"></slot>
+      <form id="form" on:submit|preventDefault={onSubmit}>
+        <slot name="form"></slot>
+      </form>
     </div>
     
 
     <div class="flex flex-row justify-end gap-4 z-10 p-4 bg-neutral text-neutral-content rounded-b-2xl">
       <button class="btn btn-sm btn-ghost font-light" on:click={() => showTooltip = false} disabled={buttonsDisabled}>Cancel</button>
-      <button class="btn btn-sm btn-primary" on:click={() => fakeLoad()} disabled={buttonsDisabled}>Submit</button>
+      <button type="submit" form="form" class="btn btn-sm btn-primary" disabled={buttonsDisabled}>Submit</button>
     </div>
   </div>
 </div>
