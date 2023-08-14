@@ -7,7 +7,7 @@
   
 
   export let queued: string[] = [];
-  export let queuedIds: number[];
+  export let queuedIds: string[];
   export let disabled: boolean = false;
   export let endpoint: string;
 

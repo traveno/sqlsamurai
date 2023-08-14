@@ -1,23 +1,33 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import { clans, towns, towns_meta } from "$lib/data";
+  import { towns_fields, towns_meta } from "$lib/data";
   import DeleteItemMenu from "$lib/menus/DeleteItemMenu.svelte";
   import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
   import Paginate from "$lib/utils/Paginate.svelte";
+  import { onMount } from "svelte";
 
-  const endpoint = 'https://sqlsamurai.fike.io/api/towns';
+  const endpoint = 'https://sqlsamurai.fike.io/api/battleground_towns';
+  const endpoint_clans = 'https://sqlsamurai.fike.io/api/clans';
   let entity = 'Battleground Towns';
-  let array = towns;
+  let array: any[] = [];
+  let arrayClans: any[] = [];
   let currentId = 0;
   let lowerIndex = 0;
   let upperIndex = 0;
-  let selectableArray = array.map(a => ({ checked: false, obj: a }));
+  let selectableArray: { checked: boolean, obj: any }[] = [];
+
+  onMount(() => {
+    fetchData();
+  });
+
+  async function fetchData() {
+    arrayClans = await fetch(endpoint_clans).then(res => res.json());
+    array = await fetch(endpoint).then(res => res.json());
+    console.log(array, arrayClans);
+    selectableArray = array.map((a: any) => ({ checked: false, obj: a }));
+  }
 </script>
 
 <div class="container max-w-screen-lg bg-neutral text-neutral-content rounded-lg ml-16 my-16 shadow-xl">
-  <div class="p-8 py-4 rounded-t-lg bg-warning text-warning-content">
-    <div>This table is currently not implemented, please visit <a class="text-blue-700" href="{base}/warriors">Warriors</a> for testing...</div>
-  </div>
   <div class="p-8 flex flex-col gap-8">
     <div class="flex flex-row justify-between gap-4">
       <div class="font-mono text-3xl">{entity}</div>
@@ -29,17 +39,17 @@
           New
         </button>
         <div slot="form">
-          {#each Object.entries(array[currentId]) as [name, value], i}
+          {#each towns_fields as name, i}
             <div class="form-control w-full max-w-xs">
-              <label for="id" class="label"><span class="label-text font-light">{towns_meta[i]}</span></label>
-              {#if name === 'clan_town_id'}
-              <select class="select bg-base-100 select-bordered border-base-content/25 font-light">
-                {#each clans as clan}
+              <label for="{name}" class="label"><span class="label-text font-light">{towns_meta[i]}</span></label>
+              {#if name === 'clan_id'}
+              <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light">
+                {#each arrayClans as clan}
                 <option value={clan.clan_id}>{clan.clan_name} ({clan.clan_id})</option>
                 {/each}
               </select>
               {:else}
-              <input name="id" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
+              <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
               {/if}
             </div>
           {/each}
@@ -70,8 +80,8 @@
           <tr class="transition {data.checked ? 'bg-red-600/20' : 'bg-neutral'}">
             <td><input class="checkbox" type="checkbox" bind:checked={data.checked} /></td>
             {#each Object.entries(data.obj) as [key, value]}
-              {#if key === 'clan_town_id'}
-              <td>{clans[Number(value) - 1].clan_name} ({value})</td>
+              {#if key === 'clan_id'}
+              <td>{arrayClans.find(c => c.clan_id === value).clan_name} ({value})</td>
               {:else}
               <td>{value}</td>
               {/if}
@@ -83,17 +93,18 @@
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                 </button>
                 <div slot="form">
+                  <input type="hidden" name="town_id" value="{data.obj.town_id}" />
                   {#each Object.entries(data.obj) as [name, value], i}
                     <div class="form-control w-full max-w-xs">
-                      <label for="id" class="label"><span class="label-text font-light">{towns_meta[i]}</span></label>
-                      {#if name === 'clan_town_id'}
-                      <select class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
-                        {#each clans as clan}
+                      <label for="{name}" class="label"><span class="label-text font-light">{towns_meta[i]}</span></label>
+                      {#if name === 'clan_id'}
+                      <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
+                        {#each arrayClans as clan}
                         <option value={clan.clan_id}>{clan.clan_name} ({clan.clan_id})</option>
                         {/each}
                       </select>
                       {:else}
-                      <input name="id" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                      <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
                       {/if}
                     </div>
                   {/each}

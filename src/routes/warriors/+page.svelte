@@ -1,23 +1,28 @@
 <script lang="ts">
-  import { clans, warriors, warriors_meta } from "$lib/data";
+  import { warriors_meta } from "$lib/data";
   import DeleteItemMenu from "$lib/menus/DeleteItemMenu.svelte";
   import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
   import Paginate from "$lib/utils/Paginate.svelte";
   import { onMount } from "svelte";
 
   const endpoint = 'https://sqlsamurai.fike.io/api/warriors';
+  const endpoint_clans = 'https://sqlsamurai.fike.io/api/clans';
   let entity = 'Warriors';
   let array: any[] = [];
+  let arrayClans: any[] = [];
   let lowerIndex = 0;
   let upperIndex = 0;
   let selectableArray: { checked: boolean, obj: any }[] = [];
 
   onMount(() => {
-    fetch(endpoint).then(res => res.json()).then(data => {
-      array = data;
-      selectableArray = data.map((a: any) => ({ checked: false, obj: a }));
-    })    
+    fetchData();
   });
+
+  async function fetchData() {
+    arrayClans = await fetch(endpoint_clans).then(res => res.json());
+    array = await fetch(endpoint).then(res => res.json());
+    selectableArray = array.map((a: any) => ({ checked: false, obj: a }));
+  }
 </script>
 
 <div class="container max-w-screen-lg bg-neutral text-neutral-content rounded-lg ml-16 my-16 shadow-xl">
@@ -32,12 +37,12 @@
           New
         </button>
         <div slot="form">
-          {#each Object.entries(warriors[0]) as [name, value], i}
+          {#each Object.entries(array[0]) as [name, value], i}
             <div class="form-control w-full max-w-xs">
               <label for="{name}" class="label"><span class="label-text font-light">{warriors_meta[i]}</span></label>
               {#if name === 'clan_id'}
               <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light">
-                {#each clans as clan}
+                {#each arrayClans as clan}
                 <option value={clan.clan_id}>{clan.clan_name} ({clan.clan_id})</option>
                 {/each}
               </select>
@@ -74,7 +79,7 @@
             <td><input class="checkbox" type="checkbox" bind:checked={data.checked} /></td>
             {#each Object.entries(data.obj) as [key, value]}
             {#if key === 'clan_id'}
-            <td>{clans[Number(Number(value) - 1)].clan_name} ({value})</td>
+            <td>{arrayClans.find(c => c.clan_id === value).clan_name} ({value})</td>
             {:else}
             <td>{value}</td>
             {/if}
@@ -91,7 +96,7 @@
                       <label for="{name}" class="label"><span class="label-text font-light">{warriors_meta[i]}</span></label>
                       {#if name === 'clan_id'}
                       <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
-                        {#each clans as clan}
+                        {#each arrayClans as clan}
                         <option value={clan.clan_id}>{clan.clan_name} ({clan.clan_id})</option>
                         {/each}
                       </select>

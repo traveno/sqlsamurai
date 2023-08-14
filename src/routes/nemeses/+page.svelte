@@ -1,23 +1,32 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import { clans, nemeses, nemeses_meta } from "$lib/data";
+  import { nemeses_meta } from "$lib/data";
   import DeleteItemMenu from "$lib/menus/DeleteItemMenu.svelte";
   import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
   import Paginate from "$lib/utils/Paginate.svelte";
+  import { onMount } from "svelte";
 
   const endpoint = 'https://sqlsamurai.fike.io/api/nemeses';
+  const endpoint_clans = 'https://sqlsamurai.fike.io/api/clans';
   let entity = 'Nemeses';
-  let array = nemeses;
-  let currentId = 0;
+  let array: any[] = [];
+  let arrayClans: any[] = [];
   let lowerIndex = 0;
   let upperIndex = 0;
-  let selectableArray = array.map(a => ({ checked: false, obj: a }));
+  let selectableArray: { checked: boolean, obj: any }[] = [];
+
+  onMount(() => {
+    fetchData();
+  });
+
+  async function fetchData() {
+    arrayClans = await fetch(endpoint_clans).then(res => res.json());
+    array = await fetch(endpoint).then(res => res.json());
+    console.log(array, arrayClans);
+    selectableArray = array.map((a: any) => ({ checked: false, obj: a }));
+  }
 </script>
 
 <div class="container max-w-screen-lg bg-neutral text-neutral-content rounded-lg ml-16 my-16 shadow-xl">
-  <div class="p-8 py-4 rounded-t-lg bg-warning text-warning-content">
-    <div>This table is currently not implemented, please visit <a class="text-blue-700" href="{base}/warriors">Warriors</a> for testing...</div>
-  </div>
   <div class="p-8 flex flex-col gap-8">
     <div class="flex flex-row justify-between gap-4">
       <div class="font-mono text-3xl">{entity}</div>
@@ -29,23 +38,23 @@
           New
         </button>
         <div slot="form">
-          {#each Object.entries(array[currentId]) as [name, value], i}
+          {#each Object.entries(array[0]) as [name, value], i}
             <div class="form-control w-full max-w-xs">
-              <label for="id" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
+              <label for="{name}" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
               {#if name === 'clan_id'}
-              <select class="select bg-base-100 select-bordered border-base-content/25 font-light">
-                {#each clans as clan}
+              <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light">
+                {#each arrayClans as clan}
                 <option value={clan.clan_id}>{clan.clan_name} ({clan.clan_id})</option>
                 {/each}
               </select>
               {:else}
-              <input name="id" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
+              <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
               {/if}
             </div>
           {/each}
         </div>
       </NewItemMenu>
-      <DeleteItemMenu {endpoint} disabled={selectableArray.filter(i => i.checked).length === 0} queued={selectableArray.filter(a => a.checked).map(a => `${a.obj.first_name} ${a.obj.last_name} (${a.obj.nemesis_id})`)} queuedIds={selectableArray.filter(a => a.checked).map(a => a.obj.nemesis_id)}>
+      <DeleteItemMenu {endpoint} disabled={selectableArray.filter(i => i.checked).length === 0} queued={selectableArray.filter(a => a.checked).map(a => `${a.obj.nemesis_name} (${a.obj.nemesis_id})`)} queuedIds={selectableArray.filter(a => a.checked).map(a => a.obj.nemesis_id)}>
         <span slot="entity">{entity}</span>
         <button class="btn btn-error btn-outline btn-sm" disabled={selectableArray.filter(i => i.checked).length === 0}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
@@ -71,7 +80,7 @@
             <td><input class="checkbox" type="checkbox" bind:checked={data.checked} /></td>
             {#each Object.entries(data.obj) as [key, value]}
               {#if key === 'clan_id'}
-              <td>{clans[Number(Number(value) - 1)].clan_name} ({value})</td>
+              <td>{arrayClans.find(c => c.clan_id === value).clan_name} ({value})</td>
               {:else}
               <td>{value}</td>
               {/if}
@@ -85,15 +94,18 @@
                 <div slot="form">
                   {#each Object.entries(data.obj) as [name, value], i}
                     <div class="form-control w-full max-w-xs">
-                      <label for="id" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
+                      <label for="{name}" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
                       {#if name === 'clan_id'}
-                      <select class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
-                        {#each clans as clan}
+                      <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
+                        {#each arrayClans as clan}
                         <option value={clan.clan_id}>{clan.clan_name} ({clan.clan_id})</option>
                         {/each}
                       </select>
+                      {:else if name === 'nemesis_id'}
+                      <input name="{name}" value="{value}" type="hidden" />
+                      <input type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
                       {:else}
-                      <input name="id" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                      <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
                       {/if}
                     </div>
                   {/each}

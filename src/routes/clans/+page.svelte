@@ -1,23 +1,27 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import { clans, clans_meta } from "$lib/data";
+  import { clans_fields, clans_meta } from "$lib/data";
   import DeleteItemMenu from "$lib/menus/DeleteItemMenu.svelte";
   import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
   import Paginate from "$lib/utils/Paginate.svelte";
+  import { onMount } from "svelte";
 
   const endpoint = 'https://sqlsamurai.fike.io/api/clans';
   let entity = 'Clans';
-  let array = clans;
+  let array: any[] = [];
   let currentId = 0;
   let lowerIndex = 0;
   let upperIndex = 0;
-  let selectableArray = array.map(a => ({ checked: false, obj: a }));
+  let selectableArray: { checked: boolean, obj: any }[] = [];
+
+  onMount(() => {
+    fetch(endpoint).then(res => res.json()).then(data => {
+      array = data;
+      selectableArray = data.map((a: any) => ({ checked: false, obj: a }));
+    });
+  });
 </script>
 
 <div class="container max-w-screen-lg bg-neutral text-neutral-content rounded-lg ml-16 my-16 shadow-xl">
-  <div class="p-8 py-4 rounded-t-lg bg-warning text-warning-content">
-    <div>This table is currently not implemented, please visit <a class="text-blue-700" href="{base}/warriors">Warriors</a> for testing...</div>
-  </div>
   <div class="p-8 flex flex-col gap-8">
     <div class="flex flex-row justify-start items-center gap-4">
       <div class="font-mono text-3xl">{entity}</div>
@@ -29,10 +33,10 @@
           New
         </button>
         <div slot="form">
-          {#each Object.entries(array[currentId]) as [name, value], i}
+          {#each clans_fields as name, i}
             <div class="form-control w-full max-w-xs text-neutral-content">
-              <label for="id" class="label"><span class="label-text font-light">{clans_meta[i]}</span></label>
-              <input name="id" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
+              <label for="{name}" class="label"><span class="label-text font-light">{clans_meta[i]}</span></label>
+              <input name="{name}" type="{name === 'clan_size' ? 'number' : 'text'}" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
             </div>
           {/each}
         </div>
@@ -74,8 +78,13 @@
                   <div slot="form">
                     {#each Object.entries(data.obj) as [name, value], i}
                       <div class="form-control w-full max-w-xs">
-                        <label for="id" class="label"><span class="label-text font-light">{clans_meta[i]}</span></label>
-                        <input name="id" type="text" class="input font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                        <label for="{name}" class="label"><span class="label-text font-light">{clans_meta[i]}</span></label>
+                        {#if name === 'clan_id'}
+                          <input name="{name}" value="{value}" type="hidden" />
+                          <input type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                        {:else}
+                          <input name="{name}" type="{name === 'clan_size' ? 'number' : 'text'}" class="input font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                        {/if}
                       </div>
                     {/each}
                   </div>
