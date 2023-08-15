@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { nemeses_meta } from "$lib/data";
+  import { nemeses_fields, nemeses_meta } from "$lib/data";
   import DeleteItemMenu from "$lib/menus/DeleteItemMenu.svelte";
   import NewItemMenu from "$lib/menus/NewItemMenu.svelte";
   import Paginate from "$lib/utils/Paginate.svelte";
@@ -38,7 +38,7 @@
           New
         </button>
         <div slot="form">
-          {#each Object.entries(array[0]) as [name, value], i}
+          {#each nemeses_fields as name, i}
             <div class="form-control w-full max-w-xs">
               <label for="{name}" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
               {#if name === 'clan_id'}
