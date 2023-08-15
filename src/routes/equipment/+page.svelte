@@ -45,6 +45,7 @@
               {#each arrayWarriors as warrior}
               <option value={warrior.warrior_id}>{warrior.first_name} {warrior.last_name} ({warrior.warrior_id})</option>
               {/each}
+              <option value="NULL">NULL</option>
             </select>
             {:else}
             <input name="{name}" type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
@@ -79,7 +80,11 @@
             <td><input class="checkbox" type="checkbox" bind:checked={data.checked} /></td>
             {#each Object.entries(data.obj) as [key, value]}
               {#if key === 'warrior_id'}
+              {#if value === null}
+              <td>NULL</td>
+              {:else}
               <td>{arrayWarriors.find(w => w.warrior_id === value).first_name} {arrayWarriors.find(w => w.warrior_id === value).last_name} ({arrayWarriors.find(w => w.warrior_id === value).warrior_id})</td>
+              {/if}
               {:else}
               <td>{value}</td>
               {/if}
@@ -96,10 +101,11 @@
                     <div class="form-control w-full max-w-xs">
                       <label for="{name}" class="label"><span class="label-text font-light">{equipment_meta[i]}</span></label>
                       {#if name === 'warrior_id'}
-                      <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
+                      <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light" value={value === null ? 'NULL' : value}>
                         {#each arrayWarriors as warrior}
                         <option value={warrior.warrior_id}>{warrior.first_name} {warrior.last_name} ({warrior.warrior_id})</option>
                         {/each}
+                        <option value="NULL">NULL</option>
                       </select>
                       {:else}
                       <input name="{name}" type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={value} disabled={i === 0}>
