@@ -42,13 +42,13 @@
           <div class="form-control w-full max-w-xs">
             <label for="{name}" class="label"><span class="label-text font-light">{equipment_meta[i]}</span></label>
             {#if name === 'warrior_id'}
-            <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light">
+            <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light">
               {#each arrayWarriors as warrior}
               <option value={warrior.warrior_id}>{warrior.first_name} {warrior.last_name} ({warrior.warrior_id})</option>
               {/each}
             </select>
             {:else}
-            <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
+            <input name="{name}" type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
             {/if}
           </div>
         {/each}
@@ -64,7 +64,7 @@
       <div class="divider divider-horizontal m-0"></div>
       <Paginate totalRows={arrayEquipment.length} bind:lowerIndex bind:upperIndex />
     </div>
-    <table class="table">
+    <table class="table table-sm">
       <thead>
         <tr>
           <th></th>
@@ -97,13 +97,13 @@
                     <div class="form-control w-full max-w-xs">
                       <label for="{name}" class="label"><span class="label-text font-light">{equipment_meta[i]}</span></label>
                       {#if name === 'warrior_id'}
-                      <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
+                      <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
                         {#each arrayWarriors as warrior}
                         <option value={warrior.warrior_id}>{warrior.first_name} {warrior.last_name} ({warrior.warrior_id})</option>
                         {/each}
                       </select>
                       {:else}
-                      <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_inc' : value} disabled={i === 0}>
+                      <input name="{name}" type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={value} disabled={i === 0}>
                       {/if}
                     </div>
                   {/each}

@@ -20,7 +20,6 @@
   });
 </script>
 
-
 <div class="container max-w-screen-lg bg-neutral text-neutral-content rounded-lg ml-16 my-16 shadow-xl">
   <div class="p-8 flex flex-col gap-8">
     <div class="flex flex-row justify-between gap-4">
@@ -36,7 +35,7 @@
           {#each defense_masters_fields as name, i}
             <div class="form-control w-full max-w-xs">
               <label for="{name}" class="label"><span class="label-text font-light">{defense_masters_meta[i]}</span></label>
-              <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
+              <input name="{name}" type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
             </div>
           {/each}
         </div>
@@ -51,7 +50,7 @@
       <div class="divider divider-horizontal m-0"></div>
       <Paginate totalRows={arrayMasters.length} bind:lowerIndex bind:upperIndex />
     </div>
-    <table class="table">
+    <table class="table table-sm">
       <thead>
         <tr>
           <th></th>
@@ -79,7 +78,7 @@
                   {#each Object.entries(data.obj) as [name, value], i}
                     <div class="form-control w-full max-w-xs">
                       <label for="{name}" class="label"><span class="label-text font-light">{defense_masters_meta[i]}</span></label>
-                      <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                      <input name="{name}" type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={value} disabled={i === 0}>
                     </div>
                   {/each}
                 </div>

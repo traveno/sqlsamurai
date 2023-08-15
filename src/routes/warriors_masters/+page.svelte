@@ -45,13 +45,13 @@
             <div class="form-control w-full max-w-xs">
               <label for="{name}" class="label"><span class="label-text font-light">{warriors_masters_meta[i]}</span></label>
               {#if name === 'master_id'}
-              <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light">
+              <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light">
                 {#each arrayMasters as master}
                   <option value={master.master_id}>{master.master_name} ({master.master_id})</option>
                 {/each}
               </select>
               {:else}
-              <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light">
+              <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light">
                 {#each arrayWarriors as warrior}
                   <option value={warrior.warrior_id}>{warrior.first_name} {warrior.last_name} ({warrior.warrior_id})</option>
                 {/each}
@@ -72,7 +72,7 @@
       <div class="divider divider-horizontal m-0"></div>
       <Paginate totalRows={arrayWarriorsMasters.length} bind:lowerIndex bind:upperIndex />
     </div>
-    <table class="table">
+    <table class="table table-sm">
       <thead>
         <tr>
           <th></th>
@@ -106,13 +106,13 @@
                     <div class="form-control w-full max-w-xs">
                       <label for="id" class="label"><span class="label-text font-light">{warriors_masters_meta[i]}</span></label>
                       {#if name === 'master_id'}
-                      <select name={name} class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
+                      <select name={name} class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
                         {#each arrayMasters as master}
                           <option value={master.master_id}>{master.master_name} ({master.master_id})</option>
                         {/each}
                       </select>
                       {:else}
-                      <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
+                      <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
                         {#each arrayWarriors as warrior}
                           <option value={warrior.warrior_id}>{warrior.first_name} {warrior.last_name} ({warrior.warrior_id})</option>
                         {/each}

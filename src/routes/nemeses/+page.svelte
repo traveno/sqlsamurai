@@ -42,13 +42,13 @@
             <div class="form-control w-full max-w-xs">
               <label for="{name}" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
               {#if name === 'clan_id'}
-              <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light">
+              <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light">
                 {#each arrayClans as clan}
                 <option value={clan.clan_id}>{clan.clan_name} ({clan.clan_id})</option>
                 {/each}
               </select>
               {:else}
-              <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
+              <input name="{name}" type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
               {/if}
             </div>
           {/each}
@@ -64,7 +64,7 @@
       <div class="divider divider-horizontal m-0"></div>
       <Paginate totalRows={arrayNemeses.length} bind:lowerIndex bind:upperIndex />
     </div>
-    <table class="table">
+    <table class="table table-sm">
       <thead>
         <tr>
           <th></th>
@@ -96,16 +96,16 @@
                     <div class="form-control w-full max-w-xs">
                       <label for="{name}" class="label"><span class="label-text font-light">{nemeses_meta[i]}</span></label>
                       {#if name === 'clan_id'}
-                      <select name="{name}" class="select bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
+                      <select name="{name}" class="select select-sm bg-base-100 select-bordered border-base-content/25 font-light" value={value}>
                         {#each arrayClans as clan}
                         <option value={clan.clan_id}>{clan.clan_name} ({clan.clan_id})</option>
                         {/each}
                       </select>
                       {:else if name === 'nemesis_id'}
                       <input name="{name}" value="{value}" type="hidden" />
-                      <input type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                      <input type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={value} disabled={i === 0}>
                       {:else}
-                      <input name="{name}" type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                      <input name="{name}" type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={value} disabled={i === 0}>
                       {/if}
                     </div>
                   {/each}

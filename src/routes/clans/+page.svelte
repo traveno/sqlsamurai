@@ -35,7 +35,7 @@
           {#each clans_fields as name, i}
             <div class="form-control w-full max-w-xs text-neutral-content">
               <label for="{name}" class="label"><span class="label-text font-light">{clans_meta[i]}</span></label>
-              <input name="{name}" type="{name === 'clan_size' ? 'number' : 'text'}" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
+              <input name="{name}" type="{name === 'clan_size' ? 'number' : 'text'}" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : ''} disabled={i === 0}>
             </div>
           {/each}
         </div>
@@ -51,7 +51,7 @@
       <Paginate totalRows={arrayClans.length} bind:lowerIndex bind:upperIndex />
     </div>
     <!-- <div class="divider divider-vertical"></div> -->
-    <table class="table">
+    <table class="table table-sm">
       <thead>
         <tr>
           <th></th>
@@ -80,9 +80,9 @@
                         <label for="{name}" class="label"><span class="label-text font-light">{clans_meta[i]}</span></label>
                         {#if name === 'clan_id'}
                           <input name="{name}" value="{value}" type="hidden" />
-                          <input type="text" class="input bg-base-100 input-bordered border-base-content/25 font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                          <input type="text" class="input input-sm bg-base-100 input-bordered border-base-content/25 font-light" value={value} disabled={i === 0}>
                         {:else}
-                          <input name="{name}" type="{name === 'clan_size' ? 'number' : 'text'}" class="input font-light" value={i === 0 ? 'auto_increment' : value} disabled={i === 0}>
+                          <input name="{name}" type="{name === 'clan_size' ? 'number' : 'text'}" class="input input-sm font-light" value={value} disabled={i === 0}>
                         {/if}
                       </div>
                     {/each}
