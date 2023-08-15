@@ -21,7 +21,6 @@
   async function fetchData() {
     arrayWarriors = await fetch(endpoint_warriors).then(res => res.json());
     arrayEquipment = await fetch(endpoint).then(res => res.json());
-    console.log(arrayEquipment, arrayWarriors);
     selectableArray = arrayEquipment.map((a: any) => ({ checked: false, obj: a }));
   }
 </script>

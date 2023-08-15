@@ -21,7 +21,6 @@
   async function fetchData() {
     arrayClans = await fetch(endpoint_clans).then(res => res.json());
     arrayTowns = await fetch(endpoint).then(res => res.json());
-    console.log(arrayTowns, arrayClans);
     selectableArray = arrayTowns.map((a: any) => ({ checked: false, obj: a }));
   }
 </script>
