@@ -6,7 +6,7 @@
 <div class="container max-w-screen-lg bg-neutral rounded-lg text-neutral-100 overflow-hidden ml-16 my-16 shadow-xl">
   <div class="relative">
     <div class="absolute w-full h-full bg-gradient-to-b from-transparent via-transparent to-neutral"></div>
-    <img src={hero} />
+    <img src={hero} alt="Our hero!" />
     
   </div>
   <div class="p-8">
